@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+	<title>Build Software</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://it.wvu.edu/research/research-computing" title="Research 
+        Computing">
+      	<img alt="Research Computing banner" src="img/ResearchComputing.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Build Software</h1></a>
+          <h2 class="subtitle">GNU Build System</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Build the python interpreter</li>
+<li>Learn the three steps to configure and build software using GNU’s build system</li>
+<li>Learn to build software without superuser privileges</li>
+</ul>
+</div>
+</section>
+<h2 id="download-the-python-interpreter">Download the python interpreter</h2>
+<p>We need to download the latest version of the python interpreter. Which is located at.</p>
+<p><a href="https://www.python.org/downloads/release/python-351">Python Download Page</a></p>
+<p>We want version 3.5.1. On the 3.5.1 download page, we choose the ‘Gzipped source tarball’. It’s important to note that this is a ‘Source release’, which is often the version you need for Linux operating systems (Ubuntu, Red Hat).</p>
+<div class="figure">
+<img src="img/python-download.png" alt="python download page" />
+<p class="caption">python download page</p>
+</div>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2 id="binary-or-installer-downloads"><span class="glyphicon glyphicon-pushpin"></span>Binary or Installer Downloads</h2>
+</div>
+<div class="panel-body">
+<p>If you are installing on a Windows or Mac OS X machine; you still can use the source release and then compile for your system. However, this tends to be a little more difficult since these operating systems do not come packaged with development tools like a compiler. For convienance, you can choose the installer for the appropriate OS. These are precompiled packages that work on the designated OS. Sometimes pakages even have these for specific linux distributions.</p>
+</div>
+</aside>
+<h2 id="unpackage-the-source-directory">Unpackage the source directory</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tar</span> xzvf Python-3.5.1.tgz
+$ <span class="kw">cd</span> Python-3.5.1
+$ <span class="kw">ls</span></code></pre></div>
+<pre class="output"><code>Doc      LICENSE  Makefile.pre.in  Objects  Parser    README      config.guess  configure.ac   setup.py
+Grammar  Lib      Misc             PC       Programs  Tools       config.sub    install-sh
+Include  Mac      Modules          PCbuild  Python    aclocal.m4  configure     pyconfig.h.in</code></pre>
+<h2 id="gnu-build-steps">GNU build steps</h2>
+<p>The GNU build system is broken into three distinct steps.</p>
+<ol style="list-style-type: decimal">
+<li>Configure</li>
+<li>Build</li>
+<li>Install</li>
+</ol>
+<p>The configure step sets up all of the file dependencies for the package on your system. This is the basis of portable software. If the configure step completes successfully, the Build and Install steps should always work.</p>
+<h3 id="configure">Configure</h3>
+<p>There will be a number of directories and files. The main file we are interested in is the <code>configure</code> script. This will setup the compile time dependencies. The script can take numerous options.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./configure</span> --help</code></pre></div>
+<p>You may notice a large number of options. If you don’t know what these options do; then you do not need to be concerned with them. The general rule, is that the default (configure with no options) is perfectly appropriate for the majority of use cases.</p>
+<p>We are intertested in the <code>--prefix</code> option, however. As a segment of the help message dictates.</p>
+<pre class="output"><code>By default, `make install&#39; will install all the files in
+`/usr/local/bin&#39;, `/usr/local/lib&#39; etc.  You can specify
+an installation prefix other than `/usr/local&#39; using `--prefix&#39;,
+for instance `--prefix=$HOME&#39;.</code></pre>
+<p>Without superuser privileges, you will not be able to install the package in <code>/usr/local</code>. Additionally, the <code>/usr</code> directory tends to be a system package, and it is almost never a good idea to put packages in there.</p>
+<p>So let’s configure the build to install in a subdirectory <code>python2</code> in our home directory.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./configure</span> --prefix=<span class="ot">$HOME</span>/python2</code></pre></div>
+<div class="figure">
+<img src="img/python-configure.png" alt="python configure output" />
+<p class="caption">python configure output</p>
+</div>
+<h3 id="build">Build</h3>
+<p>Notice the directory now has a <code>Makefile</code> in it</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">ls</span></code></pre></div>
+<pre class="output"><code>Doc      LICENSE  Makefile         Misc     PC       Programs  Tools         config.log     configure     
+Grammar  Lib      Makefile.pre     Modules  PCbuild  Python    aclocal.m4    config.status  configure.ac  
+Include  Mac      Makefile.pre.in  Objects  Parser   README    config.guess  config.sub     install-sh</code></pre>
+<p>The generated <code>Makefile</code> is what contains all of the compiling commands with correct dependences. The <code>make</code> command, will interpret and execute the <code>Makefile</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">make</span></code></pre></div>
+<p>A bunch of compiling commands, will almost always see warnings; usually can be ignored.</p>
+<h3 id="install">Install</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">make</span> install</code></pre></div>
+<p>A bunch of <code>install</code> commands coupled with <code>rm</code> and <code>cp</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> <span class="ot">$HOME</span>/python3
+$ <span class="kw">ls</span></code></pre></div>
+<pre class="output"><code>bin  include  lib  share</code></pre>
+<h2 id="test-our-installation">Test our installation</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> bin
+$ <span class="kw">./python3</span></code></pre></div>
+<pre class="output"><code>Python 3.5.1 (default, Jun  8 2016, 11:23:55) [GCC 6.1.1 20160501] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; </code></pre>
+<p>To quit the python interpreter type <code>quit()</code> at the prompt and press enter. Notice that the version in the header matches the version we just installed.<br />
+However, the problem with this install is that it is not available for use without an absolute path.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span></code></pre></div>
+<pre class="output"><code>bash: python3: command not found</code></pre>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+      		We were aided in this work by the training and other support offered by 
+      		the <a href="http://software-carpentry.org">Software Carpentry</a> 
+      		project.
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script 
+    src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>

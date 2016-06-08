@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+	<title>Build Software</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://it.wvu.edu/research/research-computing" title="Research 
+        Computing">
+      	<img alt="Research Computing banner" src="img/ResearchComputing.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Build Software</h1></a>
+          <h2 class="subtitle">Setting up a Dynamic Environment</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Understand the need for a dynamic environment</li>
+<li>Learn to load and unload modulefiles</li>
+<li>Learn to write your own modulefiles</li>
+</ul>
+</div>
+</section>
+<h2 id="pre-installed-modulefiles">Pre-installed Modulefiles</h2>
+<p>List available modulefiles</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> avail</code></pre></div>
+<div class="figure">
+<img src="img/spruce-modules.png" alt="Spruce Knob’s Available Modules Screen" />
+<p class="caption">Spruce Knob’s Available Modules Screen</p>
+</div>
+<p>Load a Modulefile</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span></code></pre></div>
+<pre class="output"><code>-bash: python3: command not found</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> load compilers/python3
+$ <span class="kw">module</span> list</code></pre></div>
+<pre class="output"><code>Currently Loaded Modulefiles:
+    1) compilers/python/3.5.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span></code></pre></div>
+<pre class="output"><code>Python 3.5.1 (default, Mar 10 2016, 10:56:02) [GCC 4.4.7 20120313 (Red Hat 
+4.4.7-16)] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; </code></pre>
+<p>Unload a Modulefile</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> unload compilers/python/3.5.1
+$ <span class="kw">module</span> list</code></pre></div>
+<pre class="output"><code>No Modulefiles Currently Loaded.</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span></code></pre></div>
+<pre class="output"><code>-bash: python3: command not found</code></pre>
+<h3 id="search-for-modulefiles">Search for Modulefiles</h3>
+<p>By Category</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> avail mpi</code></pre></div>
+<pre class="output"><code>--------------- /usr/share/Modules/development ------------------------------------
+mpi/intel/4.1.0.024 mpi/intel/5.0.3.048 mpi/mvapich2/1.9    mpi/openmpi/1.6.5
+mpi/intel/4.1.1.036 mpi/mpich2/1.2.1    mpi/mvapich2/2.0.1  mpi/openmpi/1.8.4</code></pre>
+<h3 id="what-modulefiles-look-like">What Modulefiles look like</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> show compilers/python/3.5.1</code></pre></div>
+<pre class="output"><code>-------------------------------------------------------------------
+/usr/share/Modules/development/compilers/python/3.5.1:
+
+module-whatis    Name: Python 
+module-whatis    Version: 3.5.1 
+module-whatis    Category: Scripting Language Intrepeter 
+module-whatis    URL: http://www.python.org 
+module-whatis    packages: setuptools-18.2 
+conflict         compilers/python/2.7.3 compilers/python/2.7.10 
+prepend-path     PATH /shared/software/python/python-3.5.1/bin 
+-------------------------------------------------------------------</code></pre>
+<p>What is command</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> whatis compilers/python/3.5.1</code></pre></div>
+<pre class="output"><code>compilers/python/3.5.1: Name: Python
+compilers/python/3.5.1: Version: 3.5.1
+compilers/python/3.5.1: Category: Scripting Language Intrepeter
+compilers/python/3.5.1: URL: http://www.python.org
+compilers/python/3.5.1: packages: setuptools-18.2</code></pre>
+<h3 id="internal-search-of-modulefiles">Internal search of modulefiles</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> apropos -i setuptools</code></pre></div>
+<pre class="output"><code>compilers/python/2.7.10: packages: Numpy 1.9.2, Matplotlib 1.4.3, Setuptools 18.3.1
+compilers/python/3.5.1: packages: setuptools-18.2</code></pre>
+<h2 id="writing-private-module-files">Writing private module files</h2>
+<p>Modulefiles can be written by users so they can control their own environments.<br />
+Modulefiles are very simple to write. Usually, you just want to add a directory to your <code>PATH</code> variable. We want to write a modulefile to use our python3 interpreter; which consists of adding <code>$HOME/python3/bin</code> to our <code>PATH</code> variable. This is done with the <code>prepend-path</code> directive in modulefiles.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> python3</code></pre></div>
+<pre class="output"><code>#%Module
+
+prepend-path PATH /home/training01/python3/bin</code></pre>
+<p>Personal modulefiles need to be located in a subdirectory <code>privatemodules</code> in your home directory.</p>
+<p>Load your personal private modulefiles</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> load use.own</code></pre></div>
+<p>You can now see your personal modulefiles in the <code>module avail</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> avail</code></pre></div>
+<pre class="output"><code>---------------------- /home/training01/privatemodules -------------------------------
+python3</code></pre>
+<p>We can load the python3 modulefile, and verify that it works correctly.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span></code></pre></div>
+<pre class="output"><code>-bash3: python3: command not found</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> load python3
+$ <span class="kw">module</span> list</code></pre></div>
+<pre class="output"><code>Currently Loaded Modulefiles:
+  1) use.own   2) python3</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">which</span> python3</code></pre></div>
+<pre class="output"><code>/home/training01/python3/bin/python3</code></pre>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+      		We were aided in this work by the training and other support offered by 
+      		the <a href="http://software-carpentry.org">Software Carpentry</a> 
+      		project.
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script 
+    src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
