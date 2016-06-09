@@ -35,10 +35,50 @@
 <div class="panel-body">
 <ul>
 <li>Learn to install python modules</li>
-<li>Learn to build virtual environment to handle python dependencies</li>
+<li>Install a python module using pip</li>
+<li>Install a python module using setup.py</li>
 </ul>
 </div>
 </section>
+<h2 id="install-numpy-with-pip">Install Numpy with pip</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">pip3</span> install --user numpy</code></pre></div>
+<pre class="output"><code>Collecting numpy
+  Downloading numpy-1.11.0.tar.gz (4.2MB)
+4.2MB 135kB/s Installing collected packages: numpy
+  Running setup.py install for numpy
+
+Successfully installed numpy</code></pre>
+<h2 id="install-matplotlib-using-setup.py">Install Matplotlib using setup.py</h2>
+<p><a href="https://github.com/matplotlib/matplotlib/releases">Matplotlib github release page</a></p>
+<p>Unpack the tarball <sub>~</sub> {.bash} $ tar xzvf matplotlib-1.5.1.tar.gz $ cd matplotlib $ ls <sub><sub><sub> </sub></sub></sub> {.output} CHANGELOG Makefile doc matplotlibrc.template src unit CONTRIBUTING.md README.osx examples release test_only.py versioneer.py INSTALL README.rst extern setup.cfg.template tests.py LICENSE boilerplate.py lib setup.py tools MANIFEST.in distribute_setup.py license.py setupext.py<br />
+tox.ini <sub>~</sub></p>
+<p>Build the package</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">module</span> load python3
+$ <span class="kw">python3</span> setup.py build</code></pre></div>
+<div class="figure">
+<img src="img/matplotlib-build.png" alt="setup.py build output" />
+<p class="caption">setup.py build output</p>
+</div>
+<p>Install the package</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">python3</span> setup.py install --user</code></pre></div>
+<div class="figure">
+<img src="img/matplotlib-install.png" alt="setup.py install output" />
+<p class="caption">setup.py install output</p>
+</div>
+<h2 id="try-running-the-python-script">Try running the python script</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./random-sample.py</span></code></pre></div>
+<pre class="output"><code>Traceback (most recent call last):
+  File &quot;./random-sample.py&quot;, line 4, in &lt;module&gt;
+    import matplotlib.pyplot as plt
+ImportError: No module named matplotlib.pyplot</code></pre>
+<p>But you already installed matplotlib? Need to check which python interpreter the script is calling</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">nano</span> random-sample.py</code></pre></div>
+<p>Change the first line to ‘#!/usr/bin python3’.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./random-sample.py</span></code></pre></div>
+<div class="figure">
+<img src="img/distribution.png" alt="random-sample.py output figure" />
+<p class="caption">random-sample.py output figure</p>
+</div>
         </div>
       </div>
       </article>
