@@ -96,7 +96,7 @@ So let's configure the build to install in a subdirectory `python2` in our home
 directory.
 
 ~~~ {.bash}
-$ ./configure --prefix=$HOME/python2
+$ ./configure --prefix=$HOME/python3
 ~~~
 
 ![python configure output](img/python-configure.png)

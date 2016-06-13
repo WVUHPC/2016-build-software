@@ -34,7 +34,7 @@ $ python3
 ~~~
 
 ~~~ {.bash}
-$ module load compilers/python3
+$ module load compilers/python/3.5.1
 $ module list
 ~~~
 ~~~ {.output}

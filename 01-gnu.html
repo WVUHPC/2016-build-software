@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
 	<title>Build Software</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
@@ -82,7 +81,7 @@ an installation prefix other than `/usr/local&#39; using `--prefix&#39;,
 for instance `--prefix=$HOME&#39;.</code></pre>
 <p>Without superuser privileges, you will not be able to install the package in <code>/usr/local</code>. Additionally, the <code>/usr</code> directory tends to be a system package, and it is almost never a good idea to put packages in there.</p>
 <p>So let’s configure the build to install in a subdirectory <code>python2</code> in our home directory.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./configure</span> --prefix=<span class="ot">$HOME</span>/python2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">./configure</span> --prefix=<span class="ot">$HOME</span>/python3</code></pre></div>
 <div class="figure">
 <img src="img/python-configure.png" alt="python configure output" />
 <p class="caption">python configure output</p>
