@@ -9,6 +9,10 @@ Text for the landing page
 >
 > This lesson assumes Unix skills
 
+> ## Getting Ready {.getready}
+>
+> [python script](build.tar.gz)
+
 ## Topics
 1. [GNU Build System](01-gnu.html)
 2. [Modulefiles](02-modulefile.html)
